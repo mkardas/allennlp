@@ -1,6 +1,10 @@
+from sotabencheval.utils import set_env_on_server, SOTABENCH_CACHE
 from sotabencheval.question_answering import SQuADEvaluator, SQuADVersion
 from tqdm import tqdm
 import torch
+
+set_env_on_server("ALLENNLP_CACHE_ROOT", SOTABENCH_CACHE / "allennlp")
+
 from allennlp.data import DatasetReader
 from allennlp.data.iterators import DataIterator
 from allennlp.models.archival import load_archive
@@ -23,6 +27,7 @@ def load_model(url, batch_size=BATCH_SIZE):
 
 def evaluate(model, dataset, data_iterator, evaluator):
     model.eval()
+    evaluator.reset_time()
     with torch.no_grad():
         for batch in tqdm(data_iterator(dataset, num_epochs=1, shuffle=False),
                           total=data_iterator.get_num_batches(dataset)):

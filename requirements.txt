@@ -142,5 +142,3 @@ pypandoc
 
 # Pypi uploads
 twine>=1.11.0
-
-https://github.com/paperswithcode/sotabench-eval/archive/squad.zip
